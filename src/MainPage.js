@@ -11,7 +11,7 @@ import Sub from "./Images/minos.png";
 
 //CAROL FALTA FAZER NO RENDERbUYS ALGO PARA CALCULAR O SETTOTAL
 
-export default function Buys() {
+export default function MainPage() {
   const { token } = useContext(Context);
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [nobuys, setnobuys] = useState("");

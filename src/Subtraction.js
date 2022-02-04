@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import Context from "./Context.js";
 
-export default function Sum() {
+export default function Subtraction() {
   const { token } = useContext(Context);
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [newvalue, setNew] = useState("");
@@ -34,7 +34,7 @@ export default function Sum() {
     <>
       <Container>
         <Headlist>
-          <h2>Nova entrada</h2>
+          <h2>Nova saída</h2>
         </Headlist>
         <form onSubmit={Save}>
           <List>
@@ -53,7 +53,7 @@ export default function Sum() {
           </List>
           <Footer>
             <Button type="submit" disabled={Loading}>
-              <p>Salvar entrada</p>
+              <p>Salvar saída</p>
             </Button>
           </Footer>
         </form>
