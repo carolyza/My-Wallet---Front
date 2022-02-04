@@ -9,6 +9,7 @@
     "react-loader-spinner": "^5.1.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^4.0.3",
+    "react-use-effect": "0.0.1",
     "styled-components": "^5.3.3"
   },
   "scripts": {
