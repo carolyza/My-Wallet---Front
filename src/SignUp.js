@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Logo from "./logos/Logo1.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import axios from "axios";
 
+//CRIAR ALGO PARA CONFERIR SE AS SENHAS BATEM
+
 export default function SignUp() {
   const [Loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newPass, setnewPass] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -18,25 +20,27 @@ export default function SignUp() {
     setLoading(true);
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000", {
-      email,
-      password,
-      name,
-    });
+    if (password == newPass) {
+      const requisicao = axios.post("http://localhost:5000/users", {
+        email,
+        password,
+        name,
+      });
 
-    requisicao.then(() => navigate("/"));
+      requisicao.then(() => navigate("/"));
 
-    requisicao.catch(() => {
-      alert("Houve algum erro, tente novamente");
+      requisicao.catch(() => {
+        alert("Houve algum erro, tente novamente");
+        setLoading(false);
+      });
+    } else {
+      alert("As senhas não conferem");
       setLoading(false);
-    });
+    }
   }
 
   return (
     <Container>
-      <header>
-        <Imagem src={Logo}></Imagem>
-      </header>
       <form onSubmit={Send}>
         <Main>
           <Input
@@ -63,8 +67,8 @@ export default function SignUp() {
 
           <Input
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
+            onChange={(e) => setnewPass(e.target.value)}
+            value={newPass}
             placeholder=" Confirme a senha"
             disabled={Loading}
           ></Input>

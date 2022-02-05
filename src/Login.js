@@ -19,7 +19,7 @@ export default function Login() {
     setLoading(true);
 
     event.preventDefault();
-    const requisicao = axios.post("http://localhost:5000", {
+    const requisicao = axios.post("http://localhost:5000/users", {
       email: email,
       password: password,
     });

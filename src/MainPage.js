@@ -9,7 +9,7 @@ import Image from "./Images/vector.png";
 import Sum from "./Images/plus.png";
 import Sub from "./Images/minos.png";
 
-//CAROL FALTA FAZER NO RENDERbUYS ALGO PARA CALCULAR O SETTOTAL
+//CAROL FALTA FAZER NO RENDERbUYS ALGO PARA CALCULAR O SETTOTAL E CRIAR FUNCTION LOGOUT
 
 export default function MainPage() {
   const { token } = useContext(Context);
@@ -29,7 +29,7 @@ export default function MainPage() {
   }
 
   function renderBuys() {
-    const requisicao = axios.get("http://localhost:5000", auth);
+    const requisicao = axios.get("http://localhost:5000/extrato", auth);
     requisicao.then((r) => {
       setBuys(r.data);
       CheckNull();

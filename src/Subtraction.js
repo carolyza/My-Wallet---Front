@@ -16,7 +16,7 @@ export default function Subtraction() {
   function Save(event) {
     event.preventDefault();
     const promise = axios.post(
-      "http://localhost:5000",
+      "http://localhost:5000/extrato",
       {
         value: newvalue,
         description: description,
