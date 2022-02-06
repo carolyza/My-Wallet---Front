@@ -16,7 +16,7 @@ export default function MainPage() {
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [nobuys, setnobuys] = useState("");
   const [buys, setBuys] = useState([]);
-  const [total, setTotal] = useState("");
+  const [total, setTotal] = useState("0,00");
 
   useEffect(() => {
     renderBuys();
@@ -26,6 +26,10 @@ export default function MainPage() {
     if (buys == []) {
       setnobuys("");
     }
+  }
+
+  function Logout() {
+    console.log("bananinha");
   }
 
   function renderBuys() {
@@ -45,9 +49,9 @@ export default function MainPage() {
       <Container>
         <Headlist>
           <h2>Olá, {buys.name}</h2>
-          <button onClick={() => Logout()}>
-            <Img src={Image} />
-          </button>
+          {/* <button onClick={() => Logout()}> */}
+          <Img src={Image} onClick={() => Logout()} />
+          {/* </button> */}
         </Headlist>
         <List>
           {buys.length === 0 ? (
@@ -63,20 +67,20 @@ export default function MainPage() {
             ))
           )}
           <Total>
-            <p>SALDO</p>
+            <h2>SALDO</h2>
             <p>{total}</p>
           </Total>
         </List>
         <Footer>
           <Link to={"/entrada"}>
             <button>
-              <Img src={Sum} />
+              <Images src={Sum} />
               <p>Nova entrada</p>
             </button>
           </Link>
           <Link to={"/saida"}>
             <button>
-              <Img src={Sub} />
+              <Images src={Sub} />
               <p>Nova saída</p>
             </button>
           </Link>
@@ -96,6 +100,13 @@ const HeadBuy = styled.div`
     margin-top: 11px;
     margin-right: 10px;
   }
+`;
+
+const Images = styled.img`
+  height: 21.875px;
+  width: 21.875px;
+  margin-left: 9px;
+  margin-top: 10px;
 `;
 
 const Buy = styled.div`
@@ -124,115 +135,159 @@ const Buy = styled.div`
 `;
 
 const Container = styled.div`
-  margin-top: 70px;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: #e5e5e5;
+  background: #8c11be;
+
+  align-items: center;
 `;
 
 const Headlist = styled.div`
-  margin-top: 28px;
   display: flex;
   align-items: center;
-  margin-left: 17px;
   justify-content: space-between;
-
+  width: 90%;
+  margin-bottom: 22px;
+  margin-top: 25px;
   h2 {
-    font-family: Lexend Deca;
-    font-size: 23px;
+    height: 31px;
+    width: 141px;
+    left: 24px;
+    top: 25px;
+    border-radius: nullpx;
+    font-family: Raleway;
+    font-size: 26px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 29px;
+    font-weight: 700;
+    line-height: 31px;
     letter-spacing: 0em;
     text-align: left;
-    color: #126ba5;
-  }
-
-  button {
-    height: 35px;
-    width: 40px;
-    background: #52b6ff;
-    border: none;
-    border-radius: 4.636363506317139px;
-    font-family: Lexend Deca;
-    font-size: 27px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    letter-spacing: 0em;
-    text-align: center;
     color: #ffffff;
-    margin-right: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
 const List = styled.div`
-  margin-left: 17px;
-  margin-right: 18px;
-  margin-bottom: 106px;
+  height: 446px;
+  width: 90%;
+  margin-left: 24px;
+  margin-right: 24px;
+  border-radius: 5px;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
   h1 {
-    margin-top: 28px;
-    font-family: Lexend Deca;
-    font-size: 18px;
+    height: 46px;
+    width: 180px;
+    left: 98px;
+    top: 278px;
+    border-radius: nullpx;
+    font-family: Raleway;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 23px;
     letter-spacing: 0em;
-    text-align: left;
-    color: #666666;
-  }
-  .hidden {
-    display: none;
-    visibility: hidden;
+    text-align: center;
+    color: #868686;
   }
 `;
 
 const Footer = styled.div`
   display: flex;
   margin-top: 29px;
-  justify-content: end;
+  justify-content: center;
+  width: 90%;
   align-items: center;
-  margin-right: 16px;
+  gap: 15px;
+  button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: none;
+    height: 114px;
+    width: 155px;
+    left: 25px;
+    top: 537px;
+    border-radius: 5px;
+    background: #a328d6;
+  }
+  p {
+    text-decoration: none;
+    font-family: Raleway;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    height: 40px;
+    width: 64px;
+    left: 35px;
+    top: 602px;
+    border-radius: nullpx;
+    color: #ffffff;
+    margin-left: 9px;
+    margin-bottom: 10px;
+  }
 `;
 
-const ButtonCancel = styled.button`
-  background: none;
+const Img = styled.img`
+  height: 24px;
+  width: 23px;
+  left: 328px;
+  top: 28px;
+  border-radius: 0px;
   border: none;
-  height: 20px;
-  width: 69px;
-  left: 165px;
-  top: 284px;
-  font-family: Lexend Deca;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #52b6ff;
 `;
 
-const ButtonSave = styled.button`
-  margin-left: 23px;
-  border: none;
-  height: 35px;
-  width: 84px;
-  left: 257px;
-  top: 277px;
-  border-radius: 4.636363506317139px;
-  background: #52b6ff;
-  font-family: Lexend Deca;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #ffffff;
+const Total = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+
+  h2 {
+    margin-left: 15px;
+
+    height: 20px;
+    width: 57px;
+    left: 40px;
+    top: 494px;
+    border-radius: nullpx;
+    font-family: Raleway;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+  }
+  p {
+    margin-right: 11px;
+    font-family: Raleway;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: right;
+    font-family: Raleway;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: #03ac00;
+  }
 `;
 
 const Main = styled.div`

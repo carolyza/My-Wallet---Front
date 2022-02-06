@@ -2,11 +2,9 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
-
-//CRIAR ALGO PARA CONFERIR SE AS SENHAS BATEM
+import Logo from "./Images/MyWallet.png";
 
 export default function SignUp() {
   const [Loading, setLoading] = useState(false);
@@ -21,7 +19,7 @@ export default function SignUp() {
     event.preventDefault();
 
     if (password == newPass) {
-      const requisicao = axios.post("http://localhost:5000/users", {
+      const requisicao = axios.post("http://localhost:5000/signup", {
         email,
         password,
         name,
@@ -41,6 +39,9 @@ export default function SignUp() {
 
   return (
     <Container>
+      <header>
+        <Imagem src={Logo}></Imagem>
+      </header>
       <form onSubmit={Send}>
         <Main>
           <Input
@@ -76,8 +77,7 @@ export default function SignUp() {
         <Footer>
           <Button type="submit" disabled={Loading}>
             {Loading ? (
-              <Loader
-                type="ThreeDots"
+              <ThreeDots
                 color="#FFFFFF"
                 height={13}
                 width={51}
@@ -104,9 +104,12 @@ const Main = styled.div`
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #8c11be;
+  overflow: hidden;
 `;
 const Footer = styled.div`
   display: flex;
@@ -116,47 +119,61 @@ const Footer = styled.div`
 `;
 
 const Imagem = styled.img`
-  margin-top: 68px;
-  margin-bottom: 33px;
+  margin-top: 95px;
+  margin-bottom: 28px;
 `;
 const Input = styled.input`
-  margin-bottom: 6px;
-  height: 45px;
-  width: 303px;
+  border: none;
+  height: 58px;
+  width: 326px;
+  left: 25px;
+  top: 233px;
   border-radius: 5px;
-  border: 1px solid #d4d4d4;
-  font-family: Lexend Deca;
+  font-family: Raleway;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
-  line-height: 25px;
+  line-height: 23px;
   letter-spacing: 0em;
   text-align: left;
+  color: #000000;
+  margin-bottom: 13px;
 `;
 
 const Button = styled.button`
-  margin-bottom: 25px;
-  height: 45px;
-  width: 303px;
-  border-radius: 4.636363506317139px;
-  background: #52b6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
-  font-family: Lexend Deca;
-  font-size: 21px;
+  height: 46px;
+  width: 326px;
+  left: 23px;
+  top: 375px;
+  border-radius: 5px;
+  font-family: Raleway;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 26px;
+  font-weight: 700;
+  line-height: 23px;
   letter-spacing: 0em;
-  text-align: center;
+  text-align: left;
+  background: #a328d6;
   color: #ffffff;
+  margin-bottom: 32px;
 `;
 const StyleLink = styled(Link)`
-  color: #52b6ff;
-  font-family: Lexend Deca;
-  font-size: 14px;
+  font-family: Raleway;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 17px;
+  font-weight: 700;
+  line-height: 18px;
   letter-spacing: 0em;
-  text-align: center;
+  text-align: left;
+  height: 18px;
+  width: 227px;
+  left: 74px;
+  top: 535px;
+  border-radius: nullpx;
+
+  color: #ffffff;
 `;
