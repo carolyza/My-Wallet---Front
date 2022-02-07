@@ -20,9 +20,9 @@ export default function SignUp() {
 
     if (password == newPass) {
       const requisicao = axios.post("http://localhost:5000/signup", {
+        name,
         email,
         password,
-        name,
       });
 
       requisicao.then(() => navigate("/"));

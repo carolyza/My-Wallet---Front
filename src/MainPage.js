@@ -9,7 +9,7 @@ import Image from "./Images/vector.png";
 import Sum from "./Images/plus.png";
 import Sub from "./Images/minos.png";
 
-//CAROL FALTA FAZER NO RENDERbUYS ALGO PARA CALCULAR O SETTOTAL E CRIAR FUNCTION LOGOUT
+// E CRIAR FUNCTION LOGOUT
 
 export default function MainPage() {
   const { token } = useContext(Context);
@@ -17,6 +17,7 @@ export default function MainPage() {
   const [nobuys, setnobuys] = useState("");
   const [buys, setBuys] = useState([]);
   const [total, setTotal] = useState("0,00");
+  let arrayValue = [];
 
   useEffect(() => {
     renderBuys();
@@ -33,14 +34,34 @@ export default function MainPage() {
   }
 
   function renderBuys() {
-    const requisicao = axios.get("http://localhost:5000/extrato", auth);
+    const requisicao = axios.get("http://localhost:5000/saida", auth);
     requisicao.then((r) => {
       setBuys(r.data);
       CheckNull();
+
+      if (arrayValue.contains(r.data.value)) {
+        arrayValue;
+      } else {
+        arrayValue.push(r.data.value);
+        setTotal(total - r.data.value);
+      }
     });
     requisicao.catch((e) => {
       console.log(e.response);
       setnobuys("hidden");
+    });
+
+    const promise = axios.get("http://localhost:5000/entrada", auth);
+    promise.then((r) => {
+      setBuys(r.data);
+      CheckNull();
+
+      if (arrayValue.contains(r.data.value)) {
+        arrayValue;
+      } else {
+        arrayValue.push(r.data.value);
+        setTotal(total + r.data.value);
+      }
     });
   }
 
@@ -49,19 +70,18 @@ export default function MainPage() {
       <Container>
         <Headlist>
           <h2>Olá, {buys.name}</h2>
-          {/* <button onClick={() => Logout()}> */}
+
           <Img src={Image} onClick={() => Logout()} />
-          {/* </button> */}
         </Headlist>
         <List>
           {buys.length === 0 ? (
             <h1 className={nobuys}>Não há registros de entrada ou saída</h1>
           ) : (
             buys.map((h) => (
-              <Buy key={h.id}>
+              <Buy>
                 <HeadBuy>
-                  <p>{h.name}</p>
-                  <p>{h.price}</p>
+                  <p>{h.description}</p>
+                  <p>{h.value}</p>
                 </HeadBuy>
               </Buy>
             ))
@@ -89,7 +109,6 @@ export default function MainPage() {
     </>
   );
 }
-
 const HeadBuy = styled.div`
   display: flex;
   flex-direction: row;
