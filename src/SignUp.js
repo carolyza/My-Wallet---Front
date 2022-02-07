@@ -123,6 +123,9 @@ const Imagem = styled.img`
   margin-bottom: 28px;
 `;
 const Input = styled.input`
+  ::placeholder {
+    color: #000000;
+  }
   border: none;
   height: 58px;
   width: 326px;
@@ -136,7 +139,7 @@ const Input = styled.input`
   line-height: 23px;
   letter-spacing: 0em;
   text-align: left;
-  color: #000000;
+
   margin-bottom: 13px;
 `;
 
@@ -162,6 +165,7 @@ const Button = styled.button`
   margin-bottom: 32px;
 `;
 const StyleLink = styled(Link)`
+  text-decoration: none;
   font-family: Raleway;
   font-size: 15px;
   font-style: normal;

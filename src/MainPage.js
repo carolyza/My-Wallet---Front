@@ -18,6 +18,8 @@ export default function MainPage() {
   const [buys, setBuys] = useState([]);
   const [total, setTotal] = useState("0,00");
   let arrayValue = [];
+  let arrayNotUsed = [];
+  const navigate = useNavigate();
 
   useEffect(() => {
     renderBuys();
@@ -30,7 +32,7 @@ export default function MainPage() {
   }
 
   function Logout() {
-    console.log("bananinha");
+    navigate("/");
   }
 
   function renderBuys() {
@@ -40,7 +42,7 @@ export default function MainPage() {
       CheckNull();
 
       if (arrayValue.contains(r.data.value)) {
-        arrayValue;
+        arrayNotUsed.push(r.data.value);
       } else {
         arrayValue.push(r.data.value);
         setTotal(total - r.data.value);
@@ -57,7 +59,7 @@ export default function MainPage() {
       CheckNull();
 
       if (arrayValue.contains(r.data.value)) {
-        arrayValue;
+        arrayNotUsed.push(r.data.value);
       } else {
         arrayValue.push(r.data.value);
         setTotal(total + r.data.value);
@@ -92,18 +94,18 @@ export default function MainPage() {
           </Total>
         </List>
         <Footer>
-          <Link to={"/entrada"}>
+          <StyleLink to={"/entrada"}>
             <button>
               <Images src={Sum} />
               <p>Nova entrada</p>
             </button>
-          </Link>
-          <Link to={"/saida"}>
+          </StyleLink>
+          <StyleLink to={"/saida"}>
             <button>
               <Images src={Sub} />
               <p>Nova saída</p>
             </button>
-          </Link>
+          </StyleLink>
         </Footer>
       </Container>
     </>
@@ -185,6 +187,10 @@ const Headlist = styled.div`
     text-align: left;
     color: #ffffff;
   }
+`;
+
+const StyleLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const List = styled.div`

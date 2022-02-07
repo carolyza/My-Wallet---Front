@@ -105,6 +105,9 @@ const Imagem = styled.img`
   margin-bottom: 24px;
 `;
 const Input = styled.input`
+  ::placeholder {
+    color: #000000;
+  }
   border: none;
   height: 58px;
   width: 326px;
@@ -144,6 +147,7 @@ const Button = styled.button`
   margin-bottom: 36px;
 `;
 const StyleLink = styled(Link)`
+  text-decoration: none;
   height: 18px;
   width: 191px;
   left: 92px;

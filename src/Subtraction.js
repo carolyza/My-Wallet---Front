@@ -97,6 +97,9 @@ const List = styled.div`
   flex-direction: column;
 `;
 const Input = styled.input`
+  ::placeholder {
+    color: #000000;
+  }
   border: none;
   display: flex;
   margin-bottom: 13px;
