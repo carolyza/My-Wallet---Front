@@ -16,7 +16,7 @@ export default function MainPage() {
   const [buys, setBuys] = useState([]);
   const [total, setTotal] = useState("0,00");
   let arrayValue = [];
-  let arrayNotUsed = [];
+  let arrayNegative = [];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,39 +37,50 @@ export default function MainPage() {
     }
   }
 
+  function ChangeTotal() {
+    let sum = 0;
+    let sub = 0;
+    for (let x = 0; x < arrayValue.length; x++) {
+      sum = sum + parseFloat(arrayValue[x]);
+    }
+    for (let y = 0; y < arrayNegative.length; y++) {
+      sub = sub + parseFloat(arrayNegative[y]);
+    }
+    setTotal(sum - sub);
+  }
+
   function renderBuys() {
-    const requisicao = axios.get("http://localhost:5000/saida", auth);
+    const requisicao = axios.get("http://localhost:5000/entrada", auth);
     requisicao.then((r) => {
+      console.log(r.data);
+      console.log(buys);
       setBuys(r.data);
       CheckNull();
+      console.log(r.data);
+      console.log(buys);
 
-      if (arrayValue.contains(r.data.value)) {
-        arrayNotUsed.push(r.data.value);
-      } else {
-        arrayValue.push(r.data.value);
-        setTotal(total - r.data.value);
+      for (let i = 0; i < r.data.length; i++) {
+        arrayValue.push(r.data[i].value);
       }
+      ChangeTotal();
+      console.log(arrayValue);
     });
     requisicao.catch((e) => {
-      console.log("banana");
       console.log(e.response);
       setnobuys("hidden");
     });
 
-    const promise = axios.get("http://localhost:5000/entrada", auth);
+    const promise = axios.get("http://localhost:5000/saida", auth);
     promise.then((r) => {
       setBuys(r.data);
       CheckNull();
-
-      if (arrayValue.contains(r.data.value)) {
-        arrayNotUsed.push(r.data.value);
-      } else {
-        arrayValue.push(r.data.value);
-        setTotal(total + r.data.value);
+      for (let i = 0; i < r.data.length; i++) {
+        arrayNegative.push(r.data[i].value);
       }
+      ChangeTotal();
+      console.log(arrayNegative);
     });
     requisicao.catch((e) => {
-      console.log("kiwi");
       console.log(e.response);
       setnobuys("hidden");
     });
@@ -84,19 +95,21 @@ export default function MainPage() {
           <Img src={Image} onClick={() => Logout()} />
         </Headlist>
         <List>
-          {buys.length === 0 ? (
-            <h1 className={nobuys}>Não há registros de entrada ou saída</h1>
-          ) : (
-            buys.map((h) => (
-              <Buy>
-                <HeadBuy>
-                  <p>{h.date}</p>
-                  <p>{h.description}</p>
-                  <p>{h.value}</p>
-                </HeadBuy>
-              </Buy>
-            ))
-          )}
+          <ListBuy>
+            {buys.length === 0 ? (
+              <h1 className={nobuys}>Não há registros de entrada ou saída</h1>
+            ) : (
+              buys.map((h) => (
+                <Buy>
+                  <HeadBuy>
+                    <p>{h.date}</p>
+                    <p>{h.description}</p>
+                    <p>{h.value}</p>
+                  </HeadBuy>
+                </Buy>
+              ))
+            )}
+          </ListBuy>
           <Total>
             <h2>SALDO</h2>
             <p className={total >= 0 ? "green" : "red"}>{total}</p>
@@ -139,9 +152,18 @@ const Images = styled.img`
   margin-top: 10px;
 `;
 
+const ListBuy = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0px;
+  flex-direction: column;
+  left: 12px;
+  width: 90%;
+`;
+
 const Buy = styled.div`
   margin-top: 20px;
-  height: 91px;
+  height: 20px;
   width: 100%;
   top: 147px;
   border-radius: 5px;
@@ -152,7 +174,6 @@ const Buy = styled.div`
   p {
     margin-left: 15px;
     margin-top: 13px;
-    margin-bottom: 8px;
     font-family: Lexend Deca;
     font-size: 20px;
     font-style: normal;
