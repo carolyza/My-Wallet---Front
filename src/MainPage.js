@@ -9,11 +9,9 @@ import Image from "./Images/vector.png";
 import Sum from "./Images/plus.png";
 import Sub from "./Images/minos.png";
 
-// E CRIAR FUNCTION LOGOUT
-
 export default function MainPage() {
-  const { token } = useContext(Context);
-  const auth = { headers: { Authorization: `Bearer ${token}` } };
+  const { user, setUser } = useContext(Context);
+  const auth = { headers: { Authorization: `Bearer ${user.token}` } };
   const [nobuys, setnobuys] = useState("");
   const [buys, setBuys] = useState([]);
   const [total, setTotal] = useState("0,00");
@@ -32,7 +30,11 @@ export default function MainPage() {
   }
 
   function Logout() {
-    navigate("/");
+    if (window.confirm("Tem certeza que quer sair?")) {
+      localStorage.setItem("last-user", null);
+      setUser(null);
+      navigate("/");
+    }
   }
 
   function renderBuys() {
@@ -49,6 +51,7 @@ export default function MainPage() {
       }
     });
     requisicao.catch((e) => {
+      console.log("banana");
       console.log(e.response);
       setnobuys("hidden");
     });
@@ -65,13 +68,18 @@ export default function MainPage() {
         setTotal(total + r.data.value);
       }
     });
+    requisicao.catch((e) => {
+      console.log("kiwi");
+      console.log(e.response);
+      setnobuys("hidden");
+    });
   }
 
   return (
     <>
       <Container>
         <Headlist>
-          <h2>Olá, {buys.name}</h2>
+          <h2>Olá, {user.name}</h2>
 
           <Img src={Image} onClick={() => Logout()} />
         </Headlist>
@@ -82,6 +90,7 @@ export default function MainPage() {
             buys.map((h) => (
               <Buy>
                 <HeadBuy>
+                  <p>{h.date}</p>
                   <p>{h.description}</p>
                   <p>{h.value}</p>
                 </HeadBuy>
@@ -90,7 +99,7 @@ export default function MainPage() {
           )}
           <Total>
             <h2>SALDO</h2>
-            <p>{total}</p>
+            <p className={total >= 0 ? "green" : "red"}>{total}</p>
           </Total>
         </List>
         <Footer>
@@ -167,14 +176,15 @@ const Container = styled.div`
 
 const Headlist = styled.div`
   display: flex;
-  align-items: center;
+
   justify-content: space-between;
+
   width: 90%;
   margin-bottom: 22px;
   margin-top: 25px;
   h2 {
     height: 31px;
-    width: 141px;
+
     left: 24px;
     top: 25px;
     border-radius: nullpx;
@@ -311,22 +321,11 @@ const Total = styled.div`
     line-height: 20px;
     letter-spacing: 0em;
     text-align: right;
+  }
+  .green {
     color: #03ac00;
   }
-`;
-
-const Main = styled.div`
-  margin-top: 20px;
-  height: 180px;
-  width: 100%;
-  top: 147px;
-  border-radius: 5px;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-
-  .hidden {
-    display: none;
-    visibility: hidden;
+  .red {
+    color: #de3131;
   }
 `;

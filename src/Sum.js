@@ -5,21 +5,24 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import Context from "./Context.js";
+import dayjs from "dayjs";
 
 export default function Sum() {
-  const { token } = useContext(Context);
-  const auth = { headers: { Authorization: `Bearer ${token}` } };
+  const { user } = useContext(Context);
+  const auth = { headers: { Authorization: `Bearer ${user.token}` } };
   const [newvalue, setNew] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
   function Save(event) {
     event.preventDefault();
+
     const promise = axios.post(
       "http://localhost:5000/entrada",
       {
         value: newvalue,
         description: description,
+        date: dayjs().format("DD/MM"),
       },
       auth
     );

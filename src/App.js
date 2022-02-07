@@ -10,9 +10,11 @@ import { useState } from "react";
 
 export default function App() {
   const [token, setToken] = useState("");
+  const lastUser = JSON.parse(localStorage.getItem("last-user"));
+  const [user, setUser] = useState(lastUser);
 
   return (
-    <UserContext.Provider value={{ token, setToken }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>

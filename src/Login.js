@@ -12,6 +12,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Loading, setLoading] = useState(false);
+  const { user, setUser } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -25,7 +26,9 @@ export default function Login() {
     });
 
     requisicao.then((r) => {
-      // setToken(r.data.token);
+      setUser(r.data);
+      localStorage.setItem("last-user", JSON.stringify(r.data));
+      console.log(user);
       navigate("/principal");
     });
     requisicao.catch((e) => {

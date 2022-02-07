@@ -5,10 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import Context from "./Context.js";
+import dayjs from "dayjs";
 
 export default function Subtraction() {
-  const { token } = useContext(Context);
-  const auth = { headers: { Authorization: `Bearer ${token}` } };
+  const { user } = useContext(Context);
+  const auth = { headers: { Authorization: `Bearer ${user.token}` } };
   const [newvalue, setNew] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Subtraction() {
       {
         value: newvalue,
         description: description,
+        date: dayjs().format("DD/MM"),
       },
       auth
     );
