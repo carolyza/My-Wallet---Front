@@ -20,7 +20,7 @@ export default function Login() {
     setLoading(true);
 
     event.preventDefault();
-    const requisicao = axios.post("http://localhost:5000/login", {
+    const requisicao = axios.post("https://mywallet-a.herokuapp.com/login", {
       email: email,
       password: password,
     });

@@ -18,7 +18,7 @@ export default function Sum() {
     event.preventDefault();
 
     const promise = axios.post(
-      "http://localhost:5000/entrada",
+      "https://mywallet-a.herokuapp.com/entrada",
       {
         value: newvalue,
         description: description,

@@ -19,7 +19,7 @@ export default function SignUp() {
     event.preventDefault();
 
     if (password == newPass) {
-      const requisicao = axios.post("http://localhost:5000/signup", {
+      const requisicao = axios.post("https://mywallet-a.herokuapp.com/signup", {
         name,
         email,
         password,

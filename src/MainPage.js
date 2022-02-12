@@ -50,7 +50,10 @@ export default function MainPage() {
   }
 
   function renderBuys() {
-    const requisicao = axios.get("http://localhost:5000/entrada", auth);
+    const requisicao = axios.get(
+      "https://mywallet-a.herokuapp.com/entrada",
+      auth
+    );
     requisicao.then((r) => {
       console.log(r.data);
       console.log(buys);
@@ -70,7 +73,7 @@ export default function MainPage() {
       setnobuys("hidden");
     });
 
-    const promise = axios.get("http://localhost:5000/saida", auth);
+    const promise = axios.get("https://mywallet-a.herokuapp.com/saida", auth);
     promise.then((r) => {
       setBuys(r.data);
       CheckNull();
